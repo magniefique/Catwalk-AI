@@ -122,7 +122,7 @@ def reset(last_state, last_move, inv):
     inv_move = [last_state, last_move]
     inv.append(inv_move)
     print_cat(0)
-    print("\033[0;31m[WARNING]:\033[0m Invalid Move, you returned to the beginning.\n")
+    print("\033[0;31m[WARNING]:\033[0m Invalid Move. You got lost. You returned to the beginning.\n")
 
     return 1, 5, inv
 
