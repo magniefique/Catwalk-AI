@@ -1,118 +1,135 @@
-import random
+import random, os
 
+# Main Function
 def main():
     state = 0
     decision = None
-    rem_moves = 5
-    decisions = ["gate", "catwalk", "obelisk", "pup wall entrance", "move forward"]
+    rem_moves = 6
     valid_moves = []
     invalid_moves = []
 
-    setting = int(input("Automatic (1) or Not (2): "))
+    print("\n\033[1;34m| | ~ :3 CATWALK: The pathway to PUP Lagoon :3 ~ | |\n\033[0m")
+    print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
+    # For the Automatic and Manual Setting
+    setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
     
     if setting not in [1, 2]:
-        print("Invalid Choice.")
+        print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
         exit(1)
 
     while rem_moves > 0:
+        # If true, let the computer decide.
         if setting == 1:
-            decision = ai(state, decisions, valid_moves, invalid_moves)
-            print(f"AI chose {decision}.")
+            if state != 0:
+                decision = ai(state, valid_moves, invalid_moves)
+                print(f"AI chose {decision}.")
 
+        # If false, manually input decision.
         elif setting == 2:
             if state != 0:
-                decision = input("Where do you wanna go, love?: ")
+                decision = input(f"Which direction do you want to go?\n[gate, catwalk, obelisk, pup wall entrance, move forward]\nEnter Here \033[1;33m->\033[0m ")
 
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, decision, rem_moves, valid_moves, invalid_moves)
     
-    print(f"After {len(invalid_moves)} invalid moves, you finally reached your destination!")
+    # Congratulatory Messages & Statistics
+    print(f"After \033[0;33m{len(invalid_moves)}\033[0m invalid moves, you finally reached your destination!")
     print(f"Valid moves are: {valid_moves}")
     print(f"Invalid moves are: {invalid_moves}")
 
-# Cat Machine
+# State Machine
 def state_machine(state, decision, moves, val, inv):
     match state:
         case 0:
             state = 1
-            print("Welcome, Cat! You are now outside the PUP.\n")
+            print("\nWelcome, Cat! You are now outside the PUP.\n")
         
         case 1:
             if decision == "gate":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
+                success_mes(state-1)
                 state = 2
                 moves -= 1
-                print("You approached the gate.\n")
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-                print("Invalid Move, you returned in the beginning.\n")
         
         case 2:
             if decision == "catwalk":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
+                success_mes(state-1)
                 state = 3
                 moves -= 1
-                print("You catwalk-ed. (PUN INTENDED)\n")
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-                print("Invalid Move, you returned in the beginning.\n")
         
         case 3:
             if decision == "obelisk":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
+                success_mes(state-1)
                 state = 4
                 moves -= 1
-                print("You went to the obelisk.\n")
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-                print("Invalid Move, you returned in the beginning.\n")
         
         case 4:
             if decision == "pup wall entrance":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
+                success_mes(state-1)
                 state = 5
                 moves -= 1
-                print("You walked forward the PUP wall entrance\n")
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-                print("Invalid Move, you returned in the beginning.\n")
         
         case 5:
             if decision == "move forward":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
+                success_mes(state-1)
                 state = 6
                 moves -= 1
-                print("You walked forward the PUP wall entrance\n")
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-                print("Invalid Move, you returned in the beginning.\n")
+        
+        case 6:
+            success_mes(state-1)
+            moves -= 1
     
     return state, moves, val, inv
+
+# Display success message
+def success_mes(state):
+    mess = ["You approached the gate.\n","You catwalk-ed. (PUN INTENDED)\n", "You went to the obelisk.\n",
+            "You walked forward the PUP wall entrance.\n", "You moved forward.\n", "You arrived at the PUP Lagoon!"]
+
+    print_cat(1)
+    print(f"\033[0;32m[ACTION]:\033[0m {mess[state]}")
 
 # Reset the remaining moves
 def reset(last_state, last_move, inv):
     inv_move = [last_state, last_move]
     inv.append(inv_move)
+    print_cat(0)
+    print("\033[0;31m[WARNING]:\033[0m Invalid Move, you returned to the beginning.\n")
 
     return 1, 5, inv
 
-def ai(curr_state, decisions, val, inv):
+def ai(curr_state, val, inv):
     making_decision = True
     dec_ret = None
+    decisions = ["gate", "catwalk", "obelisk", "pup wall entrance", "move forward"]
 
     # Checks for previously valid moves
     if len(val) > 0:
@@ -127,14 +144,29 @@ def ai(curr_state, decisions, val, inv):
             dec_ret = decisions[dec_idx]
 
             # If the next move is in invalid move, think again.
-            if [curr_state, dec_ret] in inv:
-                pass
-
-            else:
+            if [curr_state, dec_ret] not in inv:
                 making_decision = False
+            
+            else:
+                decisions.remove(dec_ret)
 
     # Return the decision (dec)
     return dec_ret
+
+# For presentation purposes
+def print_cat(emotion):
+    if emotion == 0:
+        print(f"\n         ／l、         ")
+        print(f"       （ﾟ､ ｡ ７       ")
+        print(f"         l  ~ヽ       ")
+        print(f"         じしf_,)ノ   \n")
+
+    elif emotion == 1:
+        print(f"\n　　　　  ∧＿∧　　　♪")
+        print(f"　　　 （´・ω・｀∩")
+        print(f"　　 　　o　　　,ﾉ")
+        print(f"　　　　Ｏ＿　.ﾉ")
+        print(f"♪　　　 　 (ノ\n")
 
 if __name__ == "__main__":
     main()   
