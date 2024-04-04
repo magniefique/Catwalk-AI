@@ -134,14 +134,17 @@ def dir_input(setting, state, valid, invalid):
 
 # Display success message
 def success_mes(state, mess_type):
-    mess = ["You entered the Entrance Gate.\n", "You moved forward to reach the Obelisk.\n", "You followed the Curbside of the Obelisk.\n", 
-            "You walked forward.\n"]
+    mess = ["You entered the Entrance Gate.", "You moved forward to reach the Obelisk.", "You followed the Curbside of the Obelisk.", 
+            "You walked forward."]
+    
+    percept = ["Catwalk", "Obelisk", "PUP Wall Entrance", "Garden"]
 
     succ_mess = ["You arrived at PUP Main Gate!", "You arrived at the Catwalk!", "You arrived at the Obelisk!", 
                  "You arrived at the PUP Wall Entrance!", "You arrived at the PUP Lagoon!"]
 
     if mess_type == 1:
         print(f"\033[0;32m[ACTION]:\033[0m {mess[state]}")
+        print(f"\033[0;33m[PERCEPT]:\033[0m {percept[state]}\n")
     
     elif mess_type == 2:
         print(f"\033[0;34m[SUCCESS]:\033[0m {succ_mess[state]}")
@@ -150,7 +153,8 @@ def success_mes(state, mess_type):
 def reset(last_state, last_move, inv):
     inv_move = [last_state, last_move]
     inv.append(inv_move)
-    print("\033[0;31m[WARNING]:\033[0m Invalid Move. You got lost. You returned to the beginning.\n")
+    print("\033[0;31m[WARNING]:\033[0m Invalid Move. You got lost. You returned to the beginning.")
+    print(f"\033[0;33m[PERCEPT]:\033[0m Lost\n")
 
     return 1, 5, inv
 
