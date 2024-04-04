@@ -60,6 +60,7 @@ def map(state, setting, moves, val, inv):
                 moves -= 1
             
             else:
+                inv.append([state, decision])
                 print("\033[0;31m[WARNING]:\033[0m Invalid Move. You stayed where you are.\n")
         
         # PUP_CATWALK State
