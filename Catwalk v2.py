@@ -124,6 +124,7 @@ def dir_input(setting, state, valid, invalid):
     # If true, let the computer decide.
     if setting == 1:
         decision = ai(state, valid, invalid)
+        print(f"[CHOICES]: [Enter Entrance Gate, Move Forward To Obelisk, Follow Curbside, Walk Forward]")
         print(f"AI chose {decision}.")
 
     # If false, manually input decision.
@@ -162,7 +163,7 @@ def reset(last_state, last_move, inv):
 def ai(curr_state, val, inv):
     making_decision = True
     dec_ret = None
-    decisions = ["enterentrancegate", "moveforwardtoobelisk", "followcurbside", "walkforward"]
+    decisions = ["enter entrance gate", "move forward to obelisk", "follow curbside", "walk forward"]
 
     # Checks for previously valid moves
     if len(val) > 0:

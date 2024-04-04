@@ -32,7 +32,7 @@ def state_machine(state, setting, moves, val, inv):
         
         case 1:
             success_mes(state-1, 2)
-            choices = "1 - Enter Entrance Gate | 2 - Go Another Way"
+            choices = ["Entrance Gate", "Go Another Way"]
             decision = dir_input(setting, state, choices, val, inv)
             if  decision == 1:
                 if [state, decision] not in val:
@@ -47,7 +47,7 @@ def state_machine(state, setting, moves, val, inv):
         
         case 2:
             success_mes(state-1, 2)
-            choices = "1 - Move Forward to Obelisk | 2 - Go Another Way"
+            choices = ["Move Forward to Obelisk", "Go Another Way"]
             decision = dir_input(setting, state, choices, val, inv)
             if  decision == 1:
                 if [state, decision] not in val:
@@ -62,7 +62,7 @@ def state_machine(state, setting, moves, val, inv):
         
         case 3:
             success_mes(state-1, 2)
-            choices = "1 - Follow Curbside of the Obelisk | 2 - Go Another Way"
+            choices = ["Follow Curbside of the Obelisk", "Go Another Way"]
             decision = dir_input(setting, state, choices, val, inv)
             if  decision == 1:
                 if [state, decision] not in val:
@@ -77,7 +77,7 @@ def state_machine(state, setting, moves, val, inv):
         
         case 4:
             success_mes(state-1, 2)
-            choices = "1 - Walk Forward | 2 - Go Another Way"
+            choices  = ["Walk Forward", "Go Another Way"]
             decision = dir_input(setting, state, choices, val, inv)
             if  decision == 1:
                 if [state, decision] not in val:
@@ -121,11 +121,12 @@ def dir_input(setting, state, choices, valid, invalid):
     # If true, let the computer decide.
     if setting == 1:
         decision = ai(state, valid, invalid)
-        print(f"AI chose {decision}.")
+        print(f"[CHOICES]: 1 - {choices[0]} | 2 - {choices[1]}")
+        print(f"AI chose {decision} - {choices[decision-1]}.")
 
     # If false, manually input decision.
     elif setting == 2:
-        decision = int(input(f"\033[0;32mWhat do you want to do?\033[0m\n{choices}\nEnter Here \033[1;33m->\033[0m "))
+        decision = int(input(f"\033[0;32mWhat do you want to do?\033[0m\n1 - {choices[0]} | 2 - {choices[1]}\nEnter Here \033[1;33m->\033[0m "))
 
     return decision
 
