@@ -1,4 +1,4 @@
-import random, os
+import random
 
 # Main Function
 def main():
