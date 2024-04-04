@@ -4,11 +4,11 @@ import random
 def main():
     state = 0
     decision = None
-    rem_moves = 6
+    rem_moves = 5
     valid_moves = []
     invalid_moves = []
 
-    print("\n\033[1;34m| | ~ The pathway to PUP Lagoon ~ | |\n\033[0m")
+    title()
     print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
     # For the Automatic and Manual Setting
     setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
@@ -20,14 +20,14 @@ def main():
     while rem_moves > 0:
         # If true, let the computer decide.
         if setting == 1:
-            if state not in [0, 6]:
+            if state not in [0, 5]:
                 decision = ai(state, valid_moves, invalid_moves)
                 print(f"AI chose {decision}.")
 
         # If false, manually input decision.
         elif setting == 2:
-            if state not in [0, 6]:
-                decision = input(f"\033[0;32mWhich direction do you want to go?\033[0m\n[gate, catwalk, obelisk, pup wall entrance, move forward]\nEnter Here \033[1;33m->\033[0m ")
+            if state not in [0, 5]:
+                decision = input(f"\033[0;32mWhich direction do you want to go?\033[0m\n[Catwalk, Obelisk, PUP Wall Entrance, Garden]\nEnter Here \033[1;33m->\033[0m ")
 
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, decision, rem_moves, valid_moves, invalid_moves)
     
@@ -44,7 +44,7 @@ def state_machine(state, decision, moves, val, inv):
             print("\nWelcome! You are now outside the PUP.\n")
         
         case 1:
-            if decision == "gate":
+            if decision.lower().replace(" ", "") == "catwalk":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -56,7 +56,7 @@ def state_machine(state, decision, moves, val, inv):
                 state, moves, inv = reset(state, decision, inv)
         
         case 2:
-            if decision == "catwalk":
+            if decision.lower().replace(" ", "") == "obelisk":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -68,7 +68,7 @@ def state_machine(state, decision, moves, val, inv):
                 state, moves, inv = reset(state, decision, inv)
         
         case 3:
-            if decision == "obelisk":
+            if decision.lower().replace(" ", "") == "pupwallentrance":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -80,7 +80,7 @@ def state_machine(state, decision, moves, val, inv):
                 state, moves, inv = reset(state, decision, inv)
         
         case 4:
-            if decision == "pup wall entrance":
+            if decision.lower().replace(" ", "") == "garden":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -92,27 +92,35 @@ def state_machine(state, decision, moves, val, inv):
                 state, moves, inv = reset(state, decision, inv)
         
         case 5:
-            if decision == "move forward":
-                if [state, decision] not in val:
-                    val.append([state, decision])
-
-                success_mes(state-1)
-                state = 6
-                moves -= 1
-            
-            else:
-                state, moves, inv = reset(state, decision, inv)
-        
-        case 6:
             success_mes(state-1)
             moves -= 1
     
     return state, moves, val, inv
 
+# Title Image
+def title():
+    print(f"----------------------------------------------| ~ The pathway to ~ |-------------------------------------------------------")
+    print(f"                                               ,--,                                                                        ")
+    print(f",-.----.                 ,-.----.           ,---.'|                                  ,----..       ,----..            ,--. ")
+    print(f"\    /  \                \    /  \          |   | :      ,---,         ,----..      /   /   \     /   /   \         ,--.'| ")
+    print(f"|   :    \          ,--, |   :    \         :   : |     '  .' \       /   /   \    /   .     :   /   .     :    ,--,:  : | ")
+    print(f"|   |  .\ :       ,'_ /| |   |  .\ :        |   ' :    /  ;    '.    |   :     :  .   /   ;.  \ .   /   ;.  \,`--.'`|  ' : ")
+    print(f".   :  |: |  .--. |  | : .   :  |: |        ;   ; '   :  :       \   .   |  ;. / .   ;   /  ` ;.   ;   /  ` ;|   :  :  | | ")
+    print(f"|   |   \ :,'_ /| :  . | |   |   \ :        '   | |__ :  |   /\   \  .   ; /--`  ;   |  ; \ ; |;   |  ; \ ; |:   |   \ | : ")
+    print(f"|   : .   /|  ' | |  . . |   : .   /        |   | :.'||  :  ' ;.   : ;   | ;  __ |   :  | ; | '|   :  | ; | '|   : '  '; | ")
+    print(f";   | |`-' |  | ' |  | | ;   | |`-'         '   :    ;|  |  ;/  \   \|   : |.' .'.   |  ' ' ' :.   |  ' ' ' :'   ' ;.    ; ")
+    print(f"|   | ;    :  | | :  ' ; |   | ;            |   |  ./ '  :  | \  \ ,'.   | '_.' :'   ;  \; /  |'   ;  \; /  ||   | | \   | ")
+    print(f":   ' |    |  ; ' |  | ' :   ' |            ;   : ;   |  |  '  '--'  '   ; : \  | \   \  ',  /  \   \  ',  / '   : |  ; .' ")
+    print(f":   : :    :  | : ;  ; | :   : :            |   ,/    |  :  :        '   | '/  .'  ;   :    /    ;   :    /  |   | '`--'   ")
+    print(f"|   | :    '  :  `--'   \|   | :            '---'     |  | ,'        |   :    /     \   \ .'      \   \ .'   '   : |       ")
+    print(f"`---'.|    :  ,      .-./`---'.|                      `--''           \   \ .'       `---`         `---`     ;   |.'       ")
+    print("  `---`     `--`----'      `---`                                       `---`                                 '---'          ")
+    print(f"---------------------------------------------------------------------------------------------------------------------------")
+
 # Display success message
 def success_mes(state):
-    mess = ["You approached the gate.\n","You traversed through the catwalk.\n", "You went to the obelisk.\n",
-            "You walked forward the PUP wall entrance.\n", "You moved forward.\n", "You arrived at the PUP Lagoon!"]
+    mess = ["You traversed through the Catwalk.\n", "You went to the Obelisk.\n", "You walked forward the PUP Wall Entrance.\n", 
+            "You walked to the Garden.\n", "You arrived at the PUP Lagoon!"]
 
     print(f"\033[0;32m[ACTION]:\033[0m {mess[state]}")
 
@@ -124,10 +132,11 @@ def reset(last_state, last_move, inv):
 
     return 1, 5, inv
 
+# Automatic Mode
 def ai(curr_state, val, inv):
     making_decision = True
     dec_ret = None
-    decisions = ["gate", "catwalk", "obelisk", "pup wall entrance", "move forward"]
+    decisions = ["catwalk", "obelisk", "pup wall entrance", "garden"]
 
     # Checks for previously valid moves
     if len(val) > 0:
