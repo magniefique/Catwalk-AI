@@ -5,6 +5,7 @@ def main():
     rem_moves = 5
     valid_moves = []
     invalid_moves = []
+    separator = "-"
 
     title()
     print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
@@ -16,6 +17,7 @@ def main():
         exit(1)
 
     while rem_moves > 0:
+        print(f"{separator * 35}\n")
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, setting, rem_moves, valid_moves, invalid_moves)
 
     # Congratulatory Messages & Additional Information
@@ -28,7 +30,7 @@ def state_machine(state, setting, moves, val, inv):
     match state:
         case 0:
             state = 1
-            print("\nWelcome! You are now outside the PUP.\n")
+            print("Welcome! You are now outside the PUP.\n")
         
         case 1:
             success_mes(state-1, 2)
