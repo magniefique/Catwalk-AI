@@ -26,7 +26,7 @@ def traverse(setting, valid_moves, invalid_moves):
 
     while rem_moves > 0:
         print(f"{separator * 35}\n")
-        state, rem_moves, valid_moves, invalid_moves = state_machine(state, setting, rem_moves, valid_moves, invalid_moves)
+        state, rem_moves, valid_moves, invalid_moves = map(state, setting, rem_moves, valid_moves, invalid_moves)
 
     # Congratulatory Messages & Additional Information
     print(f"After \033[0;33m{len(invalid_moves)}\033[0m invalid moves, you finally reached your destination!")
@@ -39,12 +39,14 @@ def traverse(setting, valid_moves, invalid_moves):
 
     return valid_moves, []
 
-def state_machine(state, setting, moves, val, inv):
+def map(state, setting, moves, val, inv):
     match state:
+        # INITIAL STATE
         case 0:
             state = 1
             print("Welcome! You are now outside the PUP.\n")
         
+        # PUP_MAIN_ENTRANCE
         case 1:
             success_mes(state-1, 2)
             choices = ["Entrance Gate", "Go Another Way"]
@@ -58,8 +60,9 @@ def state_machine(state, setting, moves, val, inv):
                 moves -= 1
             
             else:
-                state, moves, inv = reset(state, decision, inv)
+                print("\033[0;31m[WARNING]:\033[0m Invalid Move. You stayed where you are.\n")
         
+        # PUP_CATWALK
         case 2:
             success_mes(state-1, 2)
             choices = ["Move Forward to Obelisk", "Go Another Way"]
@@ -75,6 +78,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_OBELISK
         case 3:
             success_mes(state-1, 2)
             choices = ["Follow Curbside of the Obelisk", "Go Another Way"]
@@ -90,6 +94,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_WALL ENTRANCE
         case 4:
             success_mes(state-1, 2)
             choices  = ["Walk Forward", "Go Another Way"]
@@ -105,6 +110,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
 
+        # PUP_LAGOON
         case 5:
             success_mes(state-1, 2)
             moves -= 1

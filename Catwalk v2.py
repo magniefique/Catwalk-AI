@@ -26,7 +26,7 @@ def traverse(setting, valid_moves, invalid_moves):
 
     while rem_moves > 0:
         print(f"{separator * 35}\n")
-        state, rem_moves, valid_moves, invalid_moves = state_machine(state, setting, rem_moves, valid_moves, invalid_moves)
+        state, rem_moves, valid_moves, invalid_moves = map(state, setting, rem_moves, valid_moves, invalid_moves)
 
     # Congratulatory Messages & Additional Information
     print(f"After \033[0;33m{len(invalid_moves)}\033[0m invalid moves, you finally reached your destination!")
@@ -40,7 +40,7 @@ def traverse(setting, valid_moves, invalid_moves):
     return valid_moves, []
 
 # State Machine
-def state_machine(state, setting, moves, val, inv):
+def map(state, setting, moves, val, inv):
     match state:
         # Entering State
         case 0:
