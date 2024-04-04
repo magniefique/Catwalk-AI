@@ -114,14 +114,12 @@ def success_mes(state):
     mess = ["You approached the gate.\n","You traversed through the catwalk.\n", "You went to the obelisk.\n",
             "You walked forward the PUP wall entrance.\n", "You moved forward.\n", "You arrived at the PUP Lagoon!"]
 
-    print_cat(1)
     print(f"\033[0;32m[ACTION]:\033[0m {mess[state]}")
 
 # Reset the remaining moves
 def reset(last_state, last_move, inv):
     inv_move = [last_state, last_move]
     inv.append(inv_move)
-    print_cat(0)
     print("\033[0;31m[WARNING]:\033[0m Invalid Move. You got lost. You returned to the beginning.\n")
 
     return 1, 5, inv
@@ -152,21 +150,6 @@ def ai(curr_state, val, inv):
 
     # Return the decision (dec)
     return dec_ret
-
-# For presentation purposes
-def print_cat(emotion):
-    if emotion == 0:
-        print(f"\n         ／l、         ")
-        print(f"       （ﾟ､ ｡ ７       ")
-        print(f"         l  ~ヽ       ")
-        print(f"         じしf_,)ノ   \n")
-
-    elif emotion == 1:
-        print(f"\n　　　　  ∧＿∧　　　♪")
-        print(f"　　　 （´・ω・｀∩")
-        print(f"　　 　　o　　　,ﾉ")
-        print(f"　　　　Ｏ＿　.ﾉ")
-        print(f"♪　　　 　 (ノ\n")
 
 if __name__ == "__main__":
     main()   
