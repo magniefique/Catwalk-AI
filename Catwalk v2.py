@@ -36,7 +36,7 @@ def state_machine(state, setting, moves, val, inv):
         case 1:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "catwalk":
+            if decision.lower().replace(" ", "") == "enterentrancegate":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -51,7 +51,7 @@ def state_machine(state, setting, moves, val, inv):
         case 2:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "obelisk":
+            if decision.lower().replace(" ", "") == "moveforwardtheobelisk":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -66,7 +66,7 @@ def state_machine(state, setting, moves, val, inv):
         case 3:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "pupwallentrance":
+            if decision.lower().replace(" ", "") == "followcurbside":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -81,7 +81,7 @@ def state_machine(state, setting, moves, val, inv):
         case 4:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "garden":
+            if decision.lower().replace(" ", "") == "walkforward":
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -128,17 +128,19 @@ def dir_input(setting, state, valid, invalid):
 
     # If false, manually input decision.
     elif setting == 2:
-        decision = input(f"\033[0;32mWhich direction do you want to go?\033[0m\n[Catwalk, Obelisk, PUP Wall Entrance, Garden]\nEnter Here \033[1;33m->\033[0m ")
+        decision = input(f"\033[0;32mWhat do you want to do?\033[0m\n[Enter Entrance Gate, Move Forward The Obelisk, Follow Curbside, Walk Forward]\nEnter Here \033[1;33m->\033[0m ")
 
     return decision
 
 # Display success message
 def success_mes(state, mess_type):
-    mess = ["You traversed through the Catwalk.\n", "You went to the Obelisk.\n", "You walked forward the PUP Wall Entrance.\n", 
-            "You walked to the Garden.\n"]
+    mess = ["You entered the Entrance Gate.\n", "You moved forward to reach the Obelisk.\n", "You followed the Curbside of the Obelisk.\n", 
+            "You walked forward.\n"]
 
     succ_mess = ["You arrived at PUP Main Gate!", "You arrived at the Catwalk!", "You arrived at the Obelisk!", 
                  "You arrived at the PUP Wall Entrance!", "You arrived at the PUP Lagoon!"]
+
+    
 
     if mess_type == 1:
         print(f"\033[0;32m[ACTION]:\033[0m {mess[state]}")
@@ -158,7 +160,7 @@ def reset(last_state, last_move, inv):
 def ai(curr_state, val, inv):
     making_decision = True
     dec_ret = None
-    decisions = ["catwalk", "obelisk", "pup wall entrance", "garden"]
+    decisions = ["enterentrancegate", "moveforwardtheobelisk", "followcurbside", "walkforward"]
 
     # Checks for previously valid moves
     if len(val) > 0:
