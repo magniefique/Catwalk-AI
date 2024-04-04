@@ -16,7 +16,6 @@ def main():
             print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
             exit(1)
 
-
         valid_moves, invalid_moves = traverse(setting, valid_moves, invalid_moves)
 
 # Traverse through environment

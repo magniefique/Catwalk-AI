@@ -1,5 +1,6 @@
 import random, os
 
+# Main Function
 def main():
     valid_moves = []
     invalid_moves = []
@@ -15,9 +16,9 @@ def main():
             print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
             exit(1)
 
-        
         valid_moves, invalid_moves = traverse(setting, valid_moves, invalid_moves)
 
+# Traversal 
 def traverse(setting, valid_moves, invalid_moves):
     state = 0
     rem_moves = 5
