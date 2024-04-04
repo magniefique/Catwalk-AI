@@ -41,7 +41,7 @@ def state_machine(state, decision, moves, val, inv):
     match state:
         case 0:
             state = 1
-            print("\nWelcome, You are now outside the PUP.\n")
+            print("\nWelcome! You are now outside the PUP.\n")
         
         case 1:
             if decision == "gate":

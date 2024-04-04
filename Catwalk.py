@@ -8,7 +8,7 @@ def main():
     valid_moves = []
     invalid_moves = []
 
-    print("\n\033[1;34m| | ~ :3 CATWALK: The pathway to PUP Lagoon :3 ~ | |\n\033[0m")
+    print("\n\033[1;34m| | ~ The pathway to PUP Lagoon ~ | |\n\033[0m")
     print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
     # For the Automatic and Manual Setting
     setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
@@ -41,7 +41,7 @@ def state_machine(state, decision, moves, val, inv):
     match state:
         case 0:
             state = 1
-            print("\nWelcome, Cat! You are now outside the PUP.\n")
+            print("\nWelcome! You are now outside the PUP.\n")
         
         case 1:
             if decision == "gate":
@@ -111,7 +111,7 @@ def state_machine(state, decision, moves, val, inv):
 
 # Display success message
 def success_mes(state):
-    mess = ["You approached the gate.\n","You catwalk-ed. (PUN INTENDED)\n", "You went to the obelisk.\n",
+    mess = ["You approached the gate.\n","You traversed through the catwalk.\n", "You went to the obelisk.\n",
             "You walked forward the PUP wall entrance.\n", "You moved forward.\n", "You arrived at the PUP Lagoon!"]
 
     print_cat(1)
