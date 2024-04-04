@@ -27,10 +27,12 @@ def main():
 # State Machine
 def state_machine(state, setting, moves, val, inv):
     match state:
+        # Entering State
         case 0:
             state = 1
             print("\nWelcome! You are now outside the PUP.\n")
         
+        # PUP_MAIN_GATE State
         case 1:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
@@ -45,6 +47,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_CATWALK State
         case 2:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
@@ -59,6 +62,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_OBELISK State
         case 3:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
@@ -73,6 +77,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_WALL_ENTRANCE STATE
         case 4:
             success_mes(state-1, 2)
             decision = dir_input(setting, state, val, inv)
@@ -87,6 +92,7 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
+        # PUP_LAGOON STATE
         case 5:
             success_mes(state-1, 2)
             moves -= 1
