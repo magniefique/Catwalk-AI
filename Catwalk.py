@@ -20,14 +20,14 @@ def main():
     while rem_moves > 0:
         # If true, let the computer decide.
         if setting == 1:
-            if state != 0:
+            if state not in [0, 6]:
                 decision = ai(state, valid_moves, invalid_moves)
                 print(f"AI chose {decision}.")
 
         # If false, manually input decision.
         elif setting == 2:
-            if state != 0:
-                decision = input(f"Which direction do you want to go?\n[gate, catwalk, obelisk, pup wall entrance, move forward]\nEnter Here \033[1;33m->\033[0m ")
+            if state not in [0, 6]:
+                decision = input(f"\033[0;32mWhich direction do you want to go?\033[0m\n[gate, catwalk, obelisk, pup wall entrance, move forward]\nEnter Here \033[1;33m->\033[0m ")
 
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, decision, rem_moves, valid_moves, invalid_moves)
     
