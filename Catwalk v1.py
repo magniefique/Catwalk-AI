@@ -1,6 +1,5 @@
 import random
 
-# Main Function
 def main():
     state = 0
     rem_moves = 5
@@ -11,32 +10,31 @@ def main():
     print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
     # For the Automatic and Manual Setting
     setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
-    
+
     if setting not in [1, 2]:
         print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
         exit(1)
 
     while rem_moves > 0:
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, setting, rem_moves, valid_moves, invalid_moves)
-    
+
     # Congratulatory Messages & Additional Information
     print(f"After \033[0;33m{len(invalid_moves)}\033[0m invalid moves, you finally reached your destination!")
     print(f"Valid moves are: {valid_moves}")
     print(f"Invalid moves are: {invalid_moves}")
 
-# State Machine
+
 def state_machine(state, setting, moves, val, inv):
     match state:
-        # Entering State
         case 0:
             state = 1
             print("\nWelcome! You are now outside the PUP.\n")
         
-        # PUP_MAIN_GATE State
         case 1:
             success_mes(state-1, 2)
-            decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "enterentrancegate":
+            choices = "1 - Enter Entrance Gate | 2 - Go Another Way"
+            decision = dir_input(setting, state, choices, val, inv)
+            if  decision == 1:
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -45,13 +43,13 @@ def state_machine(state, setting, moves, val, inv):
                 moves -= 1
             
             else:
-                print("\033[0;31m[WARNING]:\033[0m Invalid Move. You stayed where you are.\n")
+                state, moves, inv = reset(state, decision, inv)
         
-        # PUP_CATWALK State
         case 2:
             success_mes(state-1, 2)
-            decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "moveforwardtoobelisk":
+            choices = "1 - Move Forward to Obelisk | 2 - Go Another Way"
+            decision = dir_input(setting, state, choices, val, inv)
+            if  decision == 1:
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -62,11 +60,11 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
-        # PUP_OBELISK State
         case 3:
             success_mes(state-1, 2)
-            decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "followcurbside":
+            choices = "1 - Follow Curbside of the Obelisk | 2 - Go Another Way"
+            decision = dir_input(setting, state, choices, val, inv)
+            if  decision == 1:
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -77,11 +75,11 @@ def state_machine(state, setting, moves, val, inv):
             else:
                 state, moves, inv = reset(state, decision, inv)
         
-        # PUP_WALL_ENTRANCE STATE
         case 4:
             success_mes(state-1, 2)
-            decision = dir_input(setting, state, val, inv)
-            if decision.lower().replace(" ", "") == "walkforward":
+            choices = "1 - Walk Forward | 2 - Go Another Way"
+            decision = dir_input(setting, state, choices, val, inv)
+            if  decision == 1:
                 if [state, decision] not in val:
                     val.append([state, decision])
 
@@ -91,12 +89,11 @@ def state_machine(state, setting, moves, val, inv):
             
             else:
                 state, moves, inv = reset(state, decision, inv)
-        
-        # PUP_LAGOON STATE
+
         case 5:
             success_mes(state-1, 2)
             moves -= 1
-    
+
     return state, moves, val, inv
 
 # Title Image
@@ -120,7 +117,7 @@ def title():
     print(f"---------------------------------------------------------------------------------------------------------------------------")
 
 # Direction Input
-def dir_input(setting, state, valid, invalid):
+def dir_input(setting, state, choices, valid, invalid):
     # If true, let the computer decide.
     if setting == 1:
         decision = ai(state, valid, invalid)
@@ -128,7 +125,7 @@ def dir_input(setting, state, valid, invalid):
 
     # If false, manually input decision.
     elif setting == 2:
-        decision = input(f"\033[0;32mWhat do you want to do?\033[0m\n[Enter Entrance Gate, Move Forward To Obelisk, Follow Curbside, Walk Forward]\nEnter Here \033[1;33m->\033[0m ")
+        decision = int(input(f"\033[0;32mWhat do you want to do?\033[0m\n{choices}\nEnter Here \033[1;33m->\033[0m "))
 
     return decision
 
@@ -158,7 +155,7 @@ def reset(last_state, last_move, inv):
 def ai(curr_state, val, inv):
     making_decision = True
     dec_ret = None
-    decisions = ["enterentrancegate", "moveforwardtoobelisk", "followcurbside", "walkforward"]
+    decisions = [1, 2]
 
     # Checks for previously valid moves
     if len(val) > 0:
@@ -182,5 +179,4 @@ def ai(curr_state, val, inv):
     # Return the decision (dec)
     return dec_ret
 
-if __name__ == "__main__":
-    main()   
+main()
