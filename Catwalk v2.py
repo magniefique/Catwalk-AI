@@ -1,30 +1,44 @@
-import random
+import random, os
 
 # Main Function
 def main():
-    state = 0
-    rem_moves = 5
     valid_moves = []
     invalid_moves = []
-    separator = "-"
-
-    title()
-    print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
-    # For the Automatic and Manual Setting
-    setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
     
-    if setting not in [1, 2]:
-        print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
-        exit(1)
+    while True:
+        os.system('cls')
+        title()
+        print("\033[0;32m[INSTRUCTIONS]:\033[0m Choose your setting:")
+        # For the Automatic and Manual Setting
+        setting = int(input("Automatic (1) or Not (2) \033[1;33m->\033[0m "))
+
+        if setting not in [1, 2]:
+            print("\033[0;31m[ERROR]:\033[0m Invalid Choice.")
+            exit(1)
+
+
+        valid_moves, invalid_moves = traverse(setting, valid_moves, invalid_moves)
+
+# Traverse through environment
+def traverse(setting, valid_moves, invalid_moves):
+    state = 0
+    rem_moves = 5
+    separator = "-"
 
     while rem_moves > 0:
         print(f"{separator * 35}\n")
         state, rem_moves, valid_moves, invalid_moves = state_machine(state, setting, rem_moves, valid_moves, invalid_moves)
-    
+
     # Congratulatory Messages & Additional Information
     print(f"After \033[0;33m{len(invalid_moves)}\033[0m invalid moves, you finally reached your destination!")
     print(f"Valid moves are: {valid_moves}")
-    print(f"Invalid moves are: {invalid_moves}")
+    print(f"Invalid moves are: {invalid_moves}\n")
+    
+    retry = int(input("Do you want to try again? (With Updated Data Set)\n1 - YES | 2 - NO \033[1;33m->\033[0m "))
+    if retry != 1:
+        exit(0)
+
+    return valid_moves, []
 
 # State Machine
 def state_machine(state, setting, moves, val, inv):
